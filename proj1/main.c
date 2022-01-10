@@ -98,6 +98,7 @@ int main(int argc, char *argv[])
         char *cap;
         printf("Provide a caption for the image: ");
         scanf("%20s", cap);
+        getchar();
 
         int final_fork = fork();
         if (final_fork == 0)
