@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.py0": "python",
+        "stdio.h": "c"
+    }
+}

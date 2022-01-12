@@ -4,120 +4,87 @@
 #include <unistd.h>
 #include <libgen.h>
 #include <string.h>
-#include <sys/wait.h> // because man waitpid() said we'd need this
-
-char *THUMBNAIM_PREFIX = "thumb_";
-char *FINAL_PREFIX = "final_";
-
-char *fmt_file(char *src, char *add)
-{
-    char *src_2 = strdup(src);
-
-    char *file = basename(src_2);
-
-    char *dest = (char *)malloc(sizeof(src) + 2 * sizeof(char));
-    sprintf(dest, "./%s%s", add, file);
-
-    return dest;
-}
+#include <sys/wait.h>
+#include "./lib/input.c"
+#include "./lib/html.c"
 
 int main(int argc, char *argv[])
 {
-    int i = 1;
+    int i;
+    int display;
 
-    FILE *fp;
-    fp = fopen("./index.html", "w");
+    if (argc > 1 && strcmp(argv[1], "-d") == 0)
+    {
+        i = 2;
+        display = 1;
+    }
+    else
+    {
+        i = 1;
+        display = 0;
+    }
 
-    char html[] = "<html><title>Programming Project 1</title>"
-                  "<h1>Benjamin's Submission</h1>"
-                  "Please click on a thumbnail to view a medium - size image";
-
-    fputs(html, fp);
+    FILE *fp = html_init();
 
     while (i < argc)
     {
         char *src = argv[i];
         int status;
 
+        char *thumb = fmt_file(src, THUMB);
+        char *final = fmt_file(src, FINAL);
+
         int rc = fork();
         if (rc == 0)
         {
             // First resize the image
-            execlp("convert", "convert", "-resize", "10\%", src, fmt_file(src, THUMBNAIM_PREFIX), NULL);
+            execlp("convert", "convert", "-resize", "10\%", src, thumb, NULL);
+            exit(100);
         }
-
         waitpid(rc, &status, 0);
-        // printf("back from waitpid. rc = %d and status = %d\n", rc, status);
 
-        // // rc = fork();
-        // // if (rc == 0)
-        // // {
-        // //     // Next display the image
-        // //     rc = execlp("display", src, NULL);
-        // // }
+        if (display)
+        {
+            int display_fork = fork();
+            if (display_fork == 0)
+            {
+                // Next display the image
+                execlp("display", "display", src, NULL);
+                exit(101);
+            }
+        }
 
         // Ask the user if they want to rotate
-        char rot;
-        printf("Rotate the Image by 90 degrees? (r/l/enter = none): ");
-        scanf("%c", &rot);
-        getchar();
-
-        char right = 'r';
-        char left = 'l';
-
-        int rotation;
-        if ((int)rot == (int)right)
-        {
-            rotation = 90;
-        }
-        else if ((int)rot == (int)left)
-        {
-            rotation = -90;
-        }
-        else
-        {
-            rotation = 0;
-        }
-
-        rot = 0;
-
-        char *rot_char = (char *)malloc(sizeof(char) * 3);
-        sprintf(rot_char, "%d", rotation);
-
-        char *thumb = fmt_file(src, THUMBNAIM_PREFIX);
-        char *final = fmt_file(src, FINAL_PREFIX);
-
+        char *rot_char = request_rot();
         int rotate_fork = fork();
         if (rotate_fork == 0)
         {
             execlp("convert", "convert", "-rotate", rot_char, thumb, thumb, NULL);
+            exit(102);
         }
-        waitpid(rotate_fork, &status, 0);
-
-        // Ask the user for a caption
-        char *cap;
-        printf("Provide a caption for the image: ");
-        scanf("%20s", cap);
-        getchar();
 
         int final_fork = fork();
         if (final_fork == 0)
         {
             execlp("convert", "convert", "-resize", "25\%", "-rotate", rot_char, src, final, NULL);
+            exit(103);
         }
-        waitpid(final_fork, &status, 0);
 
-        char html_addition[100];
+        // Ask the user for a caption
+        char *cap = request_caption();
 
-        sprintf(html_addition, "<h2>%s</h2><a href=\"%s\"><img src=\"%s\" border=\"1\" /></a> ", cap, thumb, final);
+        html_add_line(fp, src, cap);
 
-        fputs(html_addition, fp);
+        // If we have more than 400 children (since each child has pid +1 from parent if available?) then wait a second for some children to die.
+        // if (final_fork - getpid() > 400)
+        // {
+        //     sleep(1);
+        // }
 
         i++;
     };
 
-    fputs("</html>", fp);
-    fclose(fp);
+    html_close(fp);
 
     return 0;
 }

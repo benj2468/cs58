@@ -1,4 +1,13 @@
+all:
+	gcc main.c -o main
+
 album: 
 	gcc main.c -o main
 	./main $(ARG)
 	pandoc index.html -o index.pdf
+ 
+test:
+	cat ./tests/test$(TEST).txt | ./main ./photos/*
+	mkdir -p ./tests/test$(TEST)
+	mv ./index.html ./tests/test$(TEST)
+	ls ./tests/test$(TEST)/truth.html && cmp ./tests/test$(TEST)/index.html ./tests/test$(TEST)/truth.html
