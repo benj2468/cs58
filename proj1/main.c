@@ -14,6 +14,8 @@
 
 #define PIPE_ELEMENT_SIZE 8
 
+#define BATCH_SIZE 100
+
 int file_exists(char *src)
 {
     struct stat sb;
@@ -90,12 +92,17 @@ int main(int argc, char *argv[])
     // The final file we are creating - html formatted
     FILE *fp = html_init();
 
-    int j = i;
-    while (j < argc)
+    // First we loop over all of them and start the thumbnail conversions
+    while (i < argc)
     {
+        // If we have completed a batch, wait 5 seconds to let the program finish converting the previous batch.
+        if (i > 0 && i % BATCH_SIZE == 0)
+        {
+            sleep(5);
+        }
 
         // Current argument - expected to be a path to a file
-        char *src = argv[j];
+        char *src = argv[i];
         int status;
 
         // Sanity check that is is in fact a file
@@ -139,11 +146,11 @@ int main(int argc, char *argv[])
             }
             // We've finished creating our thumbnail, so lets push this image number to the pipe!
             char str[PIPE_ELEMENT_SIZE];
-            sprintf(str, "%d", j);
+            sprintf(str, "%d", i);
             write(main_pipe[WPIPE], str, PIPE_ELEMENT_SIZE);
             exit(0);
         }
-        j++;
+        i++;
     }
 
     int expected_sum = (argc_true * (argc_true + 1) / 2);
@@ -155,8 +162,6 @@ int main(int argc, char *argv[])
         char ready[PIPE_ELEMENT_SIZE];
         // Read in an image that is ready from the pipe!
         int nbytes = read(main_pipe[RPIPE], &ready, PIPE_ELEMENT_SIZE);
-
-        printf("Reading: %s from the pipe\n", ready);
 
         int ready_int = atoi(ready);
         char *src = argv[ready_int];
