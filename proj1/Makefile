@@ -3,7 +3,7 @@ all:
 
 album: 
 	gcc main.c -o main
-	./main $(ARG)
+	./main $(ARGS)
 	pandoc index.html -o index.pdf
  
 test:

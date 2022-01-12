@@ -9,6 +9,42 @@
 #include "./lib/input.c"
 #include "./lib/html.c"
 
+#define RPIPE 0 // the pipe we read from
+#define WPIPE 1 // the pipe we write to
+
+void runner(char *src, FILE *fp)
+{
+
+    // Ask the user if they want to rotate
+    char *rot_char = request_rot();
+    char *thumb = fmt_file(src, THUMB);
+    char *final = fmt_file(src, FINAL);
+
+    // FORK #3: Rotate the thumbnail
+    int rotate_fork = fork();
+    if (rotate_fork == 0)
+    {
+        execlp("convert", "convert", "-rotate", rot_char, thumb, thumb, NULL);
+        exit(102);
+    }
+
+    // FORK #4: Resize and Rotate the src into the final image
+    int final_fork = fork();
+    if (final_fork == 0)
+    {
+        execlp("convert", "convert", "-resize", "25\%", "-rotate", rot_char, src, final, NULL);
+        exit(103);
+    }
+
+    // Ask the user for a caption
+    char *cap = request_caption();
+
+    // Add data from current file to HTML file
+    html_add_line(fp, src, cap);
+
+    // We need to check to make sure at this point that we don't have too many processes open - need a way to count children.
+}
+
 int main(int argc, char *argv[])
 {
     // Tracker for arguments
@@ -30,11 +66,20 @@ int main(int argc, char *argv[])
     // The final file we are creating - html formatted
     FILE *fp = html_init();
 
-    // Look over each argument
-    while (i < argc)
+    int ready_photos[2];
+
+    if (pipe(ready_photos) < 0)
     {
+        fprintf(stderr, "error!\n");
+        exit(-1);
+    }
+
+    int j = i;
+    while (j < argc)
+    {
+
         // Current argument - expected to be a path to a file
-        char *src = argv[i];
+        char *src = argv[j];
         int status;
 
         // Sanity check that is is in fact a file
@@ -47,60 +92,65 @@ int main(int argc, char *argv[])
 
         // New pointers to our thumbnail and final file names
         char *thumb = fmt_file(src, THUMB);
-        char *final = fmt_file(src, FINAL);
 
-        // FORK #1: Resize to the thumbnail
-        int rc = fork();
-        if (rc == 0)
+        int initial_fork = fork();
+        if (initial_fork == 0)
         {
-            execlp("convert", "convert", "-resize", "10\%", src, thumb, NULL);
-            exit(100);
-        }
-        // Wait becuase we are going to rotate/display the thumbnail
-        waitpid(rc, &status, 0);
 
-        // If we have the display toggle on
-        if (display)
-        {
-            // FORK #2: Display the thumbnail
-            int display_fork = fork();
-            if (display_fork == 0)
+            // close the other ends
+            close(ready_photos[WPIPE]);
+
+            // use meaningful names
+            int to_parent = ready_photos[WPIPE];
+
+            // FORK #1: Resize to the thumbnail
+            int rc = fork();
+            if (rc == 0)
             {
-                // Next display the image
-                execlp("display", "display", thumb, NULL);
-                exit(101);
+                execlp("convert", "convert", "-resize", "10\%", src, thumb, NULL);
+                exit(100);
             }
+            // Wait becuase we are going to rotate/display the thumbnail
+            waitpid(rc, &status, 0);
+
+            // If we have the display toggle on
+            if (display)
+            {
+                // FORK #2: Display the thumbnail
+                int display_fork = fork();
+                if (display_fork == 0)
+                {
+                    // Next display the image
+                    execlp("display", "display", thumb, NULL);
+                    exit(101);
+                }
+            }
+            write(to_parent, j, sizeof(int));
+            exit(0);
         }
+        j++;
+    }
 
-        // Ask the user if they want to rotate
-        char *rot_char = request_rot();
+    // close the other ends
+    close(ready_photos[RPIPE]);
 
-        // FORK #3: Rotate the thumbnail
-        int rotate_fork = fork();
-        if (rotate_fork == 0)
-        {
-            execlp("convert", "convert", "-rotate", rot_char, thumb, thumb, NULL);
-            exit(102);
-        }
+    // use meaningful names
+    int to_child = ready_photos[WPIPE];
 
-        // FORK #4: Resize and Rotate the src into the final image
-        int final_fork = fork();
-        if (final_fork == 0)
-        {
-            execlp("convert", "convert", "-resize", "25\%", "-rotate", rot_char, src, final, NULL);
-            exit(103);
-        }
+    int ready;
 
-        // Ask the user for a caption
-        char *cap = request_caption();
+    int bytes = read(to_child, &ready, sizeof(int));
+    printf("%d", ready);
+    // while (i < argc)
+    // {
 
-        // Add data from current file to HTML file
-        html_add_line(fp, src, cap);
+    //     char *src = argv[i];
 
-        // We need to check to make sure at this point that we don't have too many processes open - need a way to count children.
+    //     runner(src, fp);
+    //     exit(0);
 
-        i++;
-    };
+    //     i++;
+    // };
 
     html_close(fp);
 

@@ -10,8 +10,8 @@ FILE *html_init()
     char html[] = "<html><title>Programming Project 1</title>"
                   "<h1>Benjamin's Submission</h1>"
                   "Please click on a thumbnail to view a medium - size image";
-
     fputs(html, fp);
+    fflush(fp);
 
     return fp;
 }
@@ -24,15 +24,17 @@ void html_add_line(FILE *fp, char *src, char *cap)
     char *thumb = fmt_file(src, THUMB);
     char *final = fmt_file(src, FINAL);
 
-    sprintf(html_addition, "<h2>%s</h2><a href=\"%s\"><img src=\"%s\" border=\"1\" /></a>", cap, thumb, final);
+    sprintf(html_addition, "<h2>%s</h2><a href=\"%s\"><img src=\"%s\" border=\"1\" /></a>", cap, final, thumb);
 
     fputs(html_addition, fp);
+    fflush(fp);
 }
 
 // Finishing touches on HTML file
 int html_close(FILE *fp)
 {
     fputs("</html>", fp);
+    fflush(fp);
 
     return fclose(fp);
 }
