@@ -2,8 +2,9 @@
 // Request a rotation (r/l) from stdin
 char *request_rot()
 {
-    char rot;
+
     printf("Rotate the Image by 90 degrees? (r/l/enter = none): ");
+    char rot;
     scanf("%c", &rot);
 
     // If the character is NOT the escape character, then remove a character (the escape character from the buffer)

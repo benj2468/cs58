@@ -21,3 +21,5 @@ make test TEST=<# test>
 ```
 
 It will generate a `./test/test<# test>/index.html` - change that to be `truth.html` and then whenever you run tests again it will compare the newly generated `index.html` to the old `truth.html` file - if they differ the test will fail.
+
+Somtimes you need to run the tests a few times - since it might swap the order of the photos in the test folder - since we use pipes :)

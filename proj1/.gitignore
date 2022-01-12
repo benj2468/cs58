@@ -1,5 +1,8 @@
-# # Images
+# Images
 *.jpg
 
-# # Final Executable
+# Final Executable
 main
+
+# PDFs
+*.pdf

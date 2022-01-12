@@ -9,8 +9,16 @@
 #include "./lib/input.c"
 #include "./lib/html.c"
 
-#define RPIPE 0 // the pipe we read from
-#define WPIPE 1 // the pipe we write to
+#define RPIPE 0
+#define WPIPE 1
+
+#define PIPE_ELEMENT_SIZE 8
+
+int file_exists(char *src)
+{
+    struct stat sb;
+    return (stat(src, &sb) != -1);
+}
 
 void runner(char *src, FILE *fp)
 {
@@ -51,28 +59,36 @@ int main(int argc, char *argv[])
     int i;
     // Option to display or not - display doesn't work if ssh on Thayer Machines
     int display;
+    // The number of images we actually have
+    int argc_true;
+
+    // pipe to keep track of files that are ready
+    int main_pipe[2];
+
+    // Helpful tracker for making sure we've processed all of the images
+    int sum = 0;
+
+    // Setup our pipe
+    if (pipe(main_pipe) == -1)
+    {
+        exit(201);
+    }
 
     if (argc > 1 && strcmp(argv[1], "-d") == 0)
     {
         i = 2;
         display = 1;
+        argc_true = argc - 2;
     }
     else
     {
         i = 1;
         display = 0;
+        argc_true = argc - 1;
     }
 
     // The final file we are creating - html formatted
     FILE *fp = html_init();
-
-    int ready_photos[2];
-
-    if (pipe(ready_photos) < 0)
-    {
-        fprintf(stderr, "error!\n");
-        exit(-1);
-    }
 
     int j = i;
     while (j < argc)
@@ -83,8 +99,7 @@ int main(int argc, char *argv[])
         int status;
 
         // Sanity check that is is in fact a file
-        struct stat sb;
-        if (stat(src, &sb) == -1)
+        if (file_exists(src) == 0)
         {
             perror("Invalid File Name");
             exit(EXIT_FAILURE);
@@ -97,11 +112,8 @@ int main(int argc, char *argv[])
         if (initial_fork == 0)
         {
 
-            // close the other ends
-            close(ready_photos[WPIPE]);
-
-            // use meaningful names
-            int to_parent = ready_photos[WPIPE];
+            /* Child process closes up read side of pipe */
+            close(main_pipe[RPIPE]);
 
             // FORK #1: Resize to the thumbnail
             int rc = fork();
@@ -125,33 +137,38 @@ int main(int argc, char *argv[])
                     exit(101);
                 }
             }
-            write(to_parent, j, sizeof(int));
+            // We've finished creating our thumbnail, so lets push this image number to the pipe!
+            char str[PIPE_ELEMENT_SIZE];
+            sprintf(str, "%d", j);
+            write(main_pipe[WPIPE], str, PIPE_ELEMENT_SIZE);
             exit(0);
         }
         j++;
     }
 
-    // close the other ends
-    close(ready_photos[RPIPE]);
+    int expected_sum = (argc_true * (argc_true + 1) / 2);
+    while (sum < expected_sum)
+    {
+        /* Parent process closes up write side of pipe */
+        close(main_pipe[WPIPE]);
 
-    // use meaningful names
-    int to_child = ready_photos[WPIPE];
+        char ready[PIPE_ELEMENT_SIZE];
+        // Read in an image that is ready from the pipe!
+        int nbytes = read(main_pipe[RPIPE], &ready, PIPE_ELEMENT_SIZE);
 
-    int ready;
+        printf("Reading: %s from the pipe\n", ready);
 
-    int bytes = read(to_child, &ready, sizeof(int));
-    printf("%d", ready);
-    // while (i < argc)
-    // {
+        int ready_int = atoi(ready);
+        char *src = argv[ready_int];
 
-    //     char *src = argv[i];
+        // Run the user-based requests for this image
+        runner(src, fp);
 
-    //     runner(src, fp);
-    //     exit(0);
+        // Increase our sum
+        sum = sum + ready_int;
+    }
 
-    //     i++;
-    // };
-
+    // Cleanup code
     html_close(fp);
 
     return 0;
