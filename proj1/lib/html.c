@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "./file_mng.c"
 
+// Initialize the HTML file with the necessary headers
 FILE *html_init()
 {
     FILE *fp;
@@ -15,6 +16,7 @@ FILE *html_init()
     return fp;
 }
 
+// Add a line of data from a given file to the HTML page
 void html_add_line(FILE *fp, char *src, char *cap)
 {
     char html_addition[100];
@@ -27,6 +29,7 @@ void html_add_line(FILE *fp, char *src, char *cap)
     fputs(html_addition, fp);
 }
 
+// Finishing touches on HTML file
 int html_close(FILE *fp)
 {
     fputs("</html>", fp);

@@ -8,6 +8,7 @@ enum PREFIX
     FINAL = 'f'
 };
 
+// Format a source file name with a given prefix
 char *fmt_file(char *src, enum PREFIX pref)
 {
     char *src_2 = strdup(src);

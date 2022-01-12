@@ -7,6 +7,7 @@ album:
 	pandoc index.html -o index.pdf
  
 test:
+	gcc main.c -o main
 	cat ./tests/test$(TEST).txt | ./main ./photos/*
 	mkdir -p ./tests/test$(TEST)
 	mv ./index.html ./tests/test$(TEST)
