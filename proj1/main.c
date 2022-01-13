@@ -26,7 +26,7 @@ void runner(char *src, FILE *fp)
 {
 
     // Ask the user if they want to rotate
-    char *rot_char = request_rot();
+    char *rot_char = request_rot(src);
     char *thumb = fmt_file(src, THUMB);
     char *final = fmt_file(src, FINAL);
 
@@ -47,7 +47,7 @@ void runner(char *src, FILE *fp)
     }
 
     // Ask the user for a caption
-    char *cap = request_caption();
+    char *cap = request_caption(src);
 
     // Add data from current file to HTML file
     html_add_line(fp, src, cap);

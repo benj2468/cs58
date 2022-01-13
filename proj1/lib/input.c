@@ -1,9 +1,9 @@
 
 // Request a rotation (r/l) from stdin
-char *request_rot()
+char *request_rot(char *src)
 {
 
-    printf("Rotate the Image by 90 degrees? (r/l/enter = none): ");
+    printf("[%s] Rotate the Image by 90 degrees? (r/l/enter = none): ", src);
     char rot;
     scanf("%c", &rot);
 
@@ -38,10 +38,10 @@ char *request_rot()
 }
 
 // Request a caption from stdin
-char *request_caption()
+char *request_caption(char *src)
 {
     char *cap = (char *)malloc(sizeof(char) * 20);
-    printf("Provide a caption for the image: ");
+    printf("[%s] Provide a caption for the image: ", src);
     scanf("%20[^\n]%*c", cap);
 
     return cap;
