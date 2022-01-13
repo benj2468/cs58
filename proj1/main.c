@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
                 if (display_fork == 0)
                 {
                     // Next display the image
-                    execlp("display", "display", thumb, NULL);
+                    execlp("display", "display", thumb, "&", NULL);
                     exit(101);
                 }
             }
@@ -153,8 +153,8 @@ int main(int argc, char *argv[])
         i++;
     }
 
-    int expected_sum = (argc_true * (argc_true + 1) / 2);
-    while (sum < expected_sum)
+    int processed = 0;
+    while (processed < argc_true)
     {
         /* Parent process closes up write side of pipe */
         close(main_pipe[WPIPE]);
@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
         runner(src, fp);
 
         // Increase our sum
-        sum = sum + ready_int;
+        processed++;
     }
 
     // Cleanup code
