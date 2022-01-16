@@ -22,13 +22,26 @@ int file_exists(char *src)
     return (stat(src, &sb) != -1);
 }
 
-void runner(char *src, FILE *fp)
+void runner(int display, char *src, FILE *fp)
 {
 
     // Ask the user if they want to rotate
     char *rot_char = request_rot(src);
     char *thumb = fmt_file(src, THUMB);
     char *final = fmt_file(src, FINAL);
+
+    // If we have the display toggle on
+    if (display)
+    {
+        // FORK #2: Display the thumbnail
+        int display_fork = fork();
+        if (display_fork == 0)
+        {
+            // Next display the image
+            execlp("display", "display", src, "&", NULL);
+            exit(101);
+        }
+    }
 
     // FORK #3: Rotate the thumbnail
     int rotate_fork = fork();
@@ -132,18 +145,6 @@ int main(int argc, char *argv[])
             // Wait becuase we are going to rotate/display the thumbnail
             waitpid(rc, &status, 0);
 
-            // If we have the display toggle on
-            if (display)
-            {
-                // FORK #2: Display the thumbnail
-                int display_fork = fork();
-                if (display_fork == 0)
-                {
-                    // Next display the image
-                    execlp("display", "display", thumb, "&", NULL);
-                    exit(101);
-                }
-            }
             // We've finished creating our thumbnail, so lets push this image number to the pipe!
             char str[PIPE_ELEMENT_SIZE];
             sprintf(str, "%d", i);
@@ -167,7 +168,7 @@ int main(int argc, char *argv[])
         char *src = argv[ready_int];
 
         // Run the user-based requests for this image
-        runner(src, fp);
+        runner(display, src, fp);
 
         // Increase our sum
         processed++;
