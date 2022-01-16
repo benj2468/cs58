@@ -1,8 +1,7 @@
-album: main.c
-	gcc -g main.c -o main
+album:
+	gcc -g main.c -o ./main
 
-complete:
-	make album
+complete: 
 	./main $(ARGS)
 	pandoc index.html -o index.pdf
  

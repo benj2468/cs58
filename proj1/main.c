@@ -102,6 +102,19 @@ int main(int argc, char *argv[])
         argc_true = argc - 1;
     }
 
+    // Check to make sure there are no duplicate arguments
+    for (int j = i; j < argc; j++)
+    {
+        for (int k = j + 1; k < argc; k++)
+        {
+            if (files_overlap(argv[j], argv[k]) || files_overlap(argv[k], argv[j]))
+            {
+                perror("Cannot pass in multiple identical arguments");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+
     // The final file we are creating - html formatted
     FILE *fp = html_init();
 
