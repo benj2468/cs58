@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include "./lib/input.c"
 #include "./lib/html.c"
+#include <signal.h>
 
 #define RPIPE 0
 #define WPIPE 1
@@ -25,8 +26,7 @@ int file_exists(char *src)
 void runner(int display, char *src, FILE *fp)
 {
 
-    // Ask the user if they want to rotate
-    char *rot_char = request_rot(src);
+    int display_fork;
     char *thumb = fmt_file(src, THUMB);
     char *final = fmt_file(src, FINAL);
 
@@ -34,14 +34,21 @@ void runner(int display, char *src, FILE *fp)
     if (display)
     {
         // FORK #2: Display the thumbnail
-        int display_fork = fork();
+        display_fork = fork();
         if (display_fork == 0)
         {
             // Next display the image
-            execlp("display", "display", src, "&", NULL);
+            int res = execlp("display", "display", src, "&", NULL);
+            if (res)
+            {
+                perror("There was an error displaying, try running without display, i.e. remove -d flat");
+            }
             exit(101);
         }
     }
+
+    // Ask the user if they want to rotate
+    char *rot_char = request_rot(src);
 
     // FORK #3: Rotate the thumbnail
     int rotate_fork = fork();
@@ -61,6 +68,11 @@ void runner(int display, char *src, FILE *fp)
 
     // Ask the user for a caption
     char *cap = request_caption(src);
+
+    if (display)
+    {
+        kill(display_fork, SIGKILL);
+    }
 
     // Add data from current file to HTML file
     html_add_line(fp, src, cap);
