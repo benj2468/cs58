@@ -3,14 +3,17 @@
 # Instructions
 
 ```
-make album ARG=<arguments to pass in>
+make complete ARG=<arguments to pass in>
 ```
 
 Arguments:
+
 - `-d` : Will display the thumbnails upon requesting input
 - `[... photos]` : You may list photos, seperates by a whitespace, or use wildcards to include full folders.
 
 This will compile the code, run it with the provided arguments, create an HTML output file, and also run `pandoc` to generate a PDF of the output: `index.pdf`.
+
+You can also run `make album` to simply compile the program.
 
 # Lifeline
 
