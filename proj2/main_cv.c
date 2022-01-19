@@ -142,7 +142,8 @@ int main(int argc, char **argv)
 
     ledyard = malloc(sizeof(struct Bridge));
     int total_cars = 1;
-    pthread_t all_threads[total_cars];
+
+    pthread_t **all_threads = (pthread_t **)malloc(total_cars * sizeof(pthread_t *));
 
     // Ledyard Initialization
     if (pthread_mutex_init(&ledyard->lock, NULL) != 0)
@@ -173,9 +174,8 @@ int main(int argc, char **argv)
         if (i == total_cars)
         {
             total_cars = total_cars * 2;
-            pthread_t *new[total_cars];
-            memcpy(new, all_threads, total_cars / 2);
-            *all_threads = new;
+
+            all_threads = (pthread_t **)realloc(all_threads, (total_cars) * sizeof(pthread_t *));
         }
 
         if (ch != '0' && ch != '1') // To Hanover
