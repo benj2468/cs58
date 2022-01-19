@@ -1,2 +1,2 @@
-make ledyard:
-	gcc main.c -o ./main
+ledyard: main.c
+	gcc main.c -g -o ledyard
