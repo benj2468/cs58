@@ -51,19 +51,19 @@ void ArriveBridge(struct Car *car)
         */
         if (ledyard->cars < MAX_CARS && ledyard->direction == dir)
         {
-            printf("[%d] Car Entering \n\n", id);
+            printf("[%d] Car Entering \n", id);
             ledyard->cars++;
             break;
         }
         else if (ledyard->cars == 0 && ledyard->direction != dir)
         // Cars don't crash here because we have 0 cars going the other direction, so switching direction is OK.
         {
-            printf("[%d] Car Entering, switching dir \n\n", id);
+            printf("[%d] Car Entering, switching dir \n", id);
             ledyard->direction = dir;
             ledyard->cars++;
             break;
         }
-        printf("[%d] Car Waiting \n\n", id);
+        printf("[%d] Car Waiting \n", id);
         ledyard->waiting[dir]++;
         pthread_cond_wait(&ledyard->cvar, &ledyard->lock);
         ledyard->waiting[dir]--;
@@ -113,13 +113,12 @@ void ExitBridge(struct Car *car)
     enum Direction dir = car->direction;
     pthread_mutex_lock(&ledyard->lock);
 
-    printf("[%d] Car Leaving\n\n", id);
+    printf("[%d] Car Leaving\n", id);
 
     ledyard->cars--;
 
-    pthread_cond_broadcast(&ledyard->cvar);
-
     pthread_mutex_unlock(&ledyard->lock);
+    pthread_cond_broadcast(&ledyard->cvar);
 }
 
 // Thread Main
@@ -135,7 +134,7 @@ void *OneVehicle(void *arg)
     ExitBridge(car);
     // now the car is off
 
-    return NULL;
+    return 0;
 }
 
 // Actual Simulation
@@ -171,34 +170,31 @@ int simulate(int schedule[][2], int times)
 
     pthread_t all_threads[total_cars];
 
-    for (int i = 0; i < times; i++)
+    int id = 0;
+    for (int t = 0; t < times; t++)
     {
-
-        for (int j = 0; j < schedule[i][0]; j++)
+        for (int j = 0; j < schedule[t][0]; j++)
         {
-            int id = i + j;
             struct Car *car = malloc(sizeof(struct Car));
             car->id = id;
             car->direction = 0;
             pthread_create(&all_threads[id], NULL, OneVehicle, (void *)car);
+            id++;
         }
-        for (int k = 0; k < schedule[i][1]; k++)
+        for (int k = 0; k < schedule[t][1]; k++)
         {
-            int id = i + schedule[i][0] + k;
             struct Car *car = malloc(sizeof(struct Car));
             car->id = id;
             car->direction = 1;
             pthread_create(&all_threads[id], NULL, OneVehicle, (void *)car);
+            id++;
         }
 
         sleep(1);
     }
-
-    int k = 0;
-    while (all_threads[k] != NULL)
+    for (int r = 0; r < total_cars; r++)
     {
-        pthread_join(all_threads[k], NULL);
-        k++;
+        pthread_join(all_threads[r], NULL);
     }
 
     pthread_mutex_destroy(&ledyard->lock);
@@ -254,7 +250,7 @@ void driver(char *out_file)
 
     simulate(schedule, times);
 
-    printf("```");
+    printf("```\n");
 
     fclose(stdout);
 }
@@ -279,6 +275,7 @@ int main(int argc, char **argv)
     {
         int digits = (int)ceil(log10(i));
         char output_file[11 + digits];
+        printf("Running a driver %d\n", i);
         sprintf(output_file, "./logs/test%d", i);
         driver(output_file);
     }
