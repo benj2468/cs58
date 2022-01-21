@@ -149,7 +149,7 @@ void OnBridge(struct Car *car)
         }
         else
         {
-            waits[i] = NULL;
+            waits[i] = 0;
         }
     }
 
