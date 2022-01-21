@@ -1,7 +1,4 @@
-all: ledyard ledyard2
+all: ledyard
 
-ledyard: main.c
-	gcc main.c -g -o ledyard.out
-
-ledyard2: ledyard.c
-	gcc ledyard.c -g -o ledyard_cv.out
+ledyard: ledyard.c
+	gcc ledyard.c -g -o ledyard.out
