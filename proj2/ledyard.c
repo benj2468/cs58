@@ -11,6 +11,7 @@
 
 #define MAX_CARS 3
 #define TIME_TO_CROSS 1
+#define FORCE_REDICECT 10
 
 enum Direction
 {
@@ -30,6 +31,7 @@ struct Bridge
     pthread_cond_t cvar;
     int cars;
     int waiting[2];
+    int force_redirect;
     enum Direction direction;
 };
 
@@ -44,12 +46,17 @@ void ArriveBridge(struct Car *car)
     pthread_mutex_lock(&ledyard->lock);
     while (1)
     {
+        if (!ledyard->force_redirect && ledyard->waiting[!dir] > 0 && (rand() % FORCE_REDICECT) == 0)
+        {
+            printf("FORCING A REDIRECTION\n");
+            ledyard->force_redirect = 1;
+        }
         /*
         Reqs:
         - cars going opposite directions crash on the bridge -- ensured by checking direction here, and switching direction below
         - the bridge collapses, because too many cars were on it -- ensured by making sure less than MAX_CARS are on bridge
         */
-        if (ledyard->cars < MAX_CARS && ledyard->direction == dir)
+        if (ledyard->cars < MAX_CARS && ledyard->direction == dir && !ledyard->force_redirect)
         {
             printf("[%d] Car Entering \n", id);
             ledyard->cars++;
@@ -58,6 +65,7 @@ void ArriveBridge(struct Car *car)
         else if (ledyard->cars == 0 && ledyard->direction != dir)
         // Cars don't crash here because we have 0 cars going the other direction, so switching direction is OK.
         {
+            ledyard->force_redirect = 0;
             printf("[%d] Car Entering, switching dir \n", id);
             ledyard->direction = dir;
             ledyard->cars++;
