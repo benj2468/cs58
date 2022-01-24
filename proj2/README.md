@@ -17,7 +17,13 @@ The program can take in an argument, namely an integer $x \geq 0$. It will run $
 
 #define TIME_TO_CROSS 1
 
-#define FORCE_REDIRECT 10 // The $p$ of note in the Graduate Extra credit component.
+#define FORCE_REDICECT 10 // This is for the GRAD-CREDIT
+
+#define MAX_TIME_STEPS 5
+
+#define MAX_CARS_PER_TIMESTEP 10
+
+#define PROB_ZERO 4
 ```
 
 ## System Design
