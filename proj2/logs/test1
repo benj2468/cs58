@@ -1,0 +1,593 @@
+```
+Schedule:
+---------------
+---- [t = 0] Norwich: 9; Hanover: 9
+---- [t = 1] Norwich: 4; Hanover: 5
+---- [t = 2] Norwich: 0; Hanover: 0
+---- [t = 3] Norwich: 0; Hanover: 7
+---------------
+[0] Car Entering, switching dir 
+
+    |------- [0] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 0         |
+    |------------------------------|
+[1] Car Entering 
+
+    |------- [1] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 0         |
+    |------------------------------|
+[2] Car Entering 
+[4] Car Waiting 
+[3] Car Waiting 
+
+    |------- [2] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 2         |
+    | Waiting (Hanover): 0         |
+    |------------------------------|
+[5] Car Waiting 
+[6] Car Waiting 
+[7] Car Waiting 
+[8] Car Waiting 
+[9] Car Waiting 
+[10] Car Waiting 
+[11] Car Waiting 
+[12] Car Waiting 
+[13] Car Waiting 
+[14] Car Waiting 
+[15] Car Waiting 
+[16] Car Waiting 
+[17] Car Waiting 
+[0] Car Leaving
+FORCING A REDIRECTION
+[11] Car Waiting 
+[2] Car Leaving
+[4] Car Waiting 
+[1] Car Leaving
+[5] Car Waiting 
+[10] Car Entering, switching dir 
+[17] Car Entering 
+
+    |------- [17] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 7         |
+    |------------------------------|
+[6] Car Waiting 
+[7] Car Waiting 
+[14] Car Entering 
+
+    |------- [14] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 6         |
+    |------------------------------|
+[4] Car Waiting 
+FORCING A REDIRECTION
+[7] Car Waiting 
+[9] Car Waiting 
+[15] Car Waiting 
+[16] Car Waiting 
+
+    |------- [10] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 6         |
+    |------------------------------|
+[12] Car Waiting 
+[13] Car Waiting 
+[11] Car Waiting 
+[5] Car Waiting 
+[6] Car Waiting 
+[8] Car Waiting 
+[3] Car Waiting 
+[18] Car Waiting 
+[19] Car Waiting 
+[20] Car Waiting 
+[21] Car Waiting 
+[22] Car Waiting 
+[23] Car Waiting 
+[24] Car Waiting 
+[25] Car Waiting 
+[26] Car Waiting 
+[17] Car Leaving
+[14] Car Leaving
+[5] Car Waiting 
+[6] Car Waiting 
+[8] Car Waiting 
+[18] Car Waiting 
+[22] Car Waiting 
+[4] Car Waiting 
+[24] Car Waiting 
+[23] Car Waiting 
+[15] Car Waiting 
+[19] Car Waiting 
+[9] Car Waiting 
+[26] Car Waiting 
+[7] Car Waiting 
+[16] Car Waiting 
+[12] Car Waiting 
+[13] Car Waiting 
+[3] Car Waiting 
+[20] Car Waiting 
+[21] Car Waiting 
+[10] Car Leaving
+[11] Car Waiting 
+[25] Car Waiting 
+[5] Car Entering, switching dir 
+[6] Car Entering 
+[4] Car Entering 
+[22] Car Waiting 
+[19] Car Waiting 
+[9] Car Waiting 
+[26] Car Waiting 
+[16] Car Waiting 
+[24] Car Waiting 
+[3] Car Waiting 
+[20] Car Waiting 
+[15] Car Waiting 
+
+    |------- [4] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 11         |
+    |------------------------------|
+[12] Car Waiting 
+[13] Car Waiting 
+FORCING A REDIRECTION
+[8] Car Waiting 
+[23] Car Waiting 
+[21] Car Waiting 
+
+    |------- [6] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 11         |
+    |------------------------------|
+
+    |------- [5] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 11         |
+    |------------------------------|
+[7] Car Waiting 
+[18] Car Waiting 
+[4] Car Leaving
+[5] Car Leaving
+[22] Car Waiting 
+[24] Car Waiting 
+[6] Car Leaving
+[25] Car Entering, switching dir 
+[9] Car Entering 
+[3] Car Waiting 
+[13] Car Entering 
+[12] Car Waiting 
+
+    |------- [9] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[7] Car Waiting 
+[26] Car Waiting 
+[23] Car Waiting 
+[15] Car Waiting 
+[12] Car Waiting 
+[20] Car Waiting 
+[21] Car Waiting 
+[3] Car Waiting 
+FORCING A REDIRECTION
+[11] Car Waiting 
+[8] Car Waiting 
+
+    |------- [13] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[26] Car Waiting 
+[22] Car Waiting 
+
+    |------- [25] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 7         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[24] Car Waiting 
+[23] Car Waiting 
+[19] Car Waiting 
+[18] Car Waiting 
+[7] Car Waiting 
+[16] Car Waiting 
+[27] Car Waiting 
+[29] Car Waiting 
+[28] Car Waiting 
+[30] Car Waiting 
+[31] Car Waiting 
+[32] Car Waiting 
+[33] Car Waiting 
+[9] Car Leaving
+[13] Car Leaving
+[25] Car Leaving
+[12] Car Waiting 
+[16] Car Waiting 
+[3] Car Entering, switching dir 
+[32] Car Waiting 
+FORCING A REDIRECTION
+[33] Car Waiting 
+[7] Car Waiting 
+[21] Car Waiting 
+[15] Car Waiting 
+[11] Car Waiting 
+[19] Car Waiting 
+
+    |------- [3] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 15         |
+    |------------------------------|
+[23] Car Waiting 
+[22] Car Waiting 
+[31] Car Waiting 
+[27] Car Waiting 
+[26] Car Waiting 
+[24] Car Waiting 
+[18] Car Waiting 
+[8] Car Waiting 
+[20] Car Waiting 
+[28] Car Waiting 
+[30] Car Waiting 
+[29] Car Waiting 
+[3] Car Leaving
+[16] Car Entering, switching dir 
+
+    |------- [16] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 14         |
+    |------------------------------|
+[21] Car Waiting 
+[12] Car Entering 
+
+    |------- [12] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 13         |
+    |------------------------------|
+[27] Car Entering 
+
+    |------- [27] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 6         |
+    | Waiting (Hanover): 12         |
+    |------------------------------|
+[32] Car Waiting 
+[15] Car Waiting 
+FORCING A REDIRECTION
+[26] Car Waiting 
+[33] Car Waiting 
+[31] Car Waiting 
+[30] Car Waiting 
+[19] Car Waiting 
+[23] Car Waiting 
+[8] Car Waiting 
+[22] Car Waiting 
+[11] Car Waiting 
+[28] Car Waiting 
+[7] Car Waiting 
+[29] Car Waiting 
+[24] Car Waiting 
+[18] Car Waiting 
+[20] Car Waiting 
+[16] Car Leaving
+[21] Car Waiting 
+[12] Car Leaving
+[27] Car Leaving
+[8] Car Entering, switching dir 
+
+    |------- [8] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 5         |
+    | Waiting (Hanover): 12         |
+    |------------------------------|
+FORCING A REDIRECTION
+[24] Car Waiting 
+[20] Car Waiting 
+[32] Car Waiting 
+[26] Car Waiting 
+[31] Car Waiting 
+[18] Car Waiting 
+[7] Car Waiting 
+[7] Car Waiting 
+[22] Car Waiting 
+[23] Car Waiting 
+[19] Car Waiting 
+[11] Car Waiting 
+[26] Car Waiting 
+[32] Car Waiting 
+[31] Car Waiting 
+[30] Car Waiting 
+[15] Car Waiting 
+[30] Car Waiting 
+[15] Car Waiting 
+[21] Car Waiting 
+[29] Car Waiting 
+[26] Car Waiting 
+[19] Car Waiting 
+[28] Car Waiting 
+[31] Car Waiting 
+[18] Car Waiting 
+[24] Car Waiting 
+[22] Car Waiting 
+[23] Car Waiting 
+[11] Car Waiting 
+[32] Car Waiting 
+[33] Car Waiting 
+[7] Car Waiting 
+[20] Car Waiting 
+[8] Car Leaving
+[19] Car Waiting 
+[24] Car Entering, switching dir 
+
+    |------- [24] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 5         |
+    | Waiting (Hanover): 11         |
+    |------------------------------|
+[32] Car Entering 
+[33] Car Entering 
+[11] Car Waiting 
+
+    |------- [33] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 5         |
+    | Waiting (Hanover): 9         |
+    |------------------------------|
+[26] Car Waiting 
+[20] Car Waiting 
+[28] Car Waiting 
+
+    |------- [32] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 5         |
+    | Waiting (Hanover): 9         |
+    |------------------------------|
+[22] Car Waiting 
+[31] Car Waiting 
+[15] Car Waiting 
+[21] Car Waiting 
+[18] Car Waiting 
+[30] Car Waiting 
+[29] Car Waiting 
+[7] Car Waiting 
+[23] Car Waiting 
+[24] Car Leaving
+[33] Car Leaving
+[19] Car Waiting 
+[32] Car Leaving
+[11] Car Entering 
+FORCING A REDIRECTION
+[23] Car Waiting 
+[29] Car Waiting 
+[26] Car Waiting 
+[15] Car Waiting 
+[7] Car Waiting 
+[28] Car Waiting 
+[22] Car Waiting 
+[18] Car Waiting 
+[31] Car Waiting 
+[20] Car Waiting 
+[30] Car Waiting 
+
+    |------- [11] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 5         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[23] Car Waiting 
+[19] Car Waiting 
+[21] Car Waiting 
+[11] Car Leaving
+[18] Car Entering, switching dir 
+
+    |------- [18] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 4         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[19] Car Entering 
+
+    |------- [19] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 3         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[29] Car Waiting 
+[20] Car Entering 
+
+    |------- [20] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 2         |
+    | Waiting (Hanover): 8         |
+    |------------------------------|
+[30] Car Waiting 
+[22] Car Waiting 
+[26] Car Waiting 
+[23] Car Waiting 
+[21] Car Waiting 
+[28] Car Waiting 
+[31] Car Waiting 
+[7] Car Waiting 
+[15] Car Waiting 
+[18] Car Leaving
+[20] Car Leaving
+[19] Car Leaving
+FORCING A REDIRECTION
+[30] Car Entering, switching dir 
+[22] Car Entering 
+
+    |------- [30] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 2         |
+    | Waiting (Hanover): 6         |
+    |------------------------------|
+[29] Car Entering 
+
+    |------- [29] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 2         |
+    | Waiting (Hanover): 5         |
+    |------------------------------|
+[23] Car Waiting 
+[26] Car Waiting 
+[15] Car Waiting 
+[31] Car Waiting 
+
+    |------- [22] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 2         |
+    | Waiting (Hanover): 5         |
+    |------------------------------|
+FORCING A REDIRECTION
+[7] Car Waiting 
+[28] Car Waiting 
+[21] Car Waiting 
+[30] Car Leaving
+[22] Car Leaving
+[29] Car Leaving
+[26] Car Waiting 
+[15] Car Waiting 
+[7] Car Entering, switching dir 
+[28] Car Waiting 
+[23] Car Waiting 
+[31] Car Waiting 
+[21] Car Entering 
+
+    |------- [21] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 5         |
+    |------------------------------|
+
+    |------- [7] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Norwich |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 5         |
+    |------------------------------|
+[21] Car Leaving
+[7] Car Leaving
+[31] Car Entering, switching dir 
+
+    |------- [31] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 1            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 4         |
+    |------------------------------|
+[15] Car Entering 
+[28] Car Entering 
+
+    |------- [15] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 2         |
+    |------------------------------|
+[26] Car Waiting 
+[23] Car Waiting 
+
+    |------- [28] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 3            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 2         |
+    |------------------------------|
+[31] Car Leaving
+[15] Car Leaving
+[26] Car Entering 
+
+    |------- [26] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 1         |
+    |------------------------------|
+[28] Car Leaving
+[23] Car Entering 
+
+    |------- [23] Ledyard Bridge -------|
+    |------------------------------|
+    | Bridge Direction: To Hanover |
+    | Cars on Bridge: 2            |
+    | Waiting (Norwich): 0         |
+    | Waiting (Hanover): 0         |
+    |------------------------------|
+[26] Car Leaving
+[23] Car Leaving
+```
